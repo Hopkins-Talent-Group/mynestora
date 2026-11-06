@@ -1,6 +1,8 @@
 # MyNestora — Storefront & Theme
 
-A fast, lightweight e-commerce storefront for **MyNestora** with direct Shop Pay checkout integration.
+A fast, lightweight e-commerce storefront for **MyNestora** with direct Shopee affiliate integration.
+
+- **Live Site:** [**https://mynestora.thekeithhopkins.com**](https://mynestora.thekeithhopkins.com)
 
 ---
 

@@ -15,7 +15,7 @@
     --hotspot-bg: {{ section.settings.hotspot_color }};
     --hotspot-bullseye: {{ section.settings.bullseye_color }};
   "
-  data-product-url="{{ block.settings.product.url }}"
+  data-product-url="{{ settings.direct_checkout_url | default: block.settings.product.url }}"
   data-product-title="{{ block.settings.product.title | escape }}"
   data-id="{{ block.id }}"
   {{ block.shopify_attributes }}
@@ -34,7 +34,7 @@
   >
     {% if hotspot_product != blank %}
       <a
-        href="{{ hotspot_product.url }}"
+        href="{{ settings.direct_checkout_url | default: hotspot_product.url }}"
         class="hotspot-dialog__link"
         aria-label="{{ hotspot_product.title | escape }}"
         ref="productLink"

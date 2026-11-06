@@ -1463,6 +1463,12 @@
     "name": "t:names.cart",
     "settings": [
       {
+        "type": "url",
+        "id": "direct_checkout_url",
+        "label": "Direct checkout URL",
+        "info": "Redirect product clicks directly to this checkout or Shop Pay link"
+      },
+      {
         "type": "select",
         "id": "cart_type",
         "label": "t:settings.cart_type",

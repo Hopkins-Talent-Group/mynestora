@@ -86,7 +86,7 @@
     <a
       class="contents"
       ref="cardGalleryLink"
-      href="{{ product.url }}"
+      href="{{ settings.direct_checkout_url | default: product.url }}"
       aria-label="{{- product.title -}}"
     >
       {% liquid
@@ -208,7 +208,7 @@
       <a
         class="contents"
         ref="cardGalleryLink"
-        href="{{ product.url }}"
+        href="{{ settings.direct_checkout_url | default: product.url }}"
       >
         <span class="title-text">{{- product.title -}}</span>
       </a>

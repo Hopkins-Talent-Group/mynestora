@@ -12,11 +12,11 @@ The root of this branch contains the standalone static storefront ready for depl
 - **[`product.html`](product.html)** — Product detail page for the **MyNestora Turbo Vac** featuring interactive photo gallery, live pricing, badges, and trust assurances.
 - **[`images/`](images/)** — Brand assets and product photography organized by category.
 
-### Direct Shop Pay Checkout Link
-All purchase buttons ("Shop all", "Buy it now", Shop Pay button, and product cards) redirect to the active dropshipping checkout:
+### Direct Shopee Affiliate Buy Link
+All purchase buttons ("Shop on Shopee", "Buy on Shopee", "Check Out on Shopee") redirect to the active Shopee affiliate product link:
 
 ```text
-https://shop.app/checkout/81753374950/cn/hWNIpKekBssPGtDWZ5ultSZY/en-us/shoppay_login?_mcs=3.AMPS&_r=AQAB1WSgM9j2ZiyklrdxyqKO5ZmtbsS3E8dnDT2mMOktz3gWNxSc&redirect_source=direct_checkout_product&tracking_unique=0253b564-04a6-4506-94a1-ac8e2598de0b&tracking_visit=c5e2a50e-7009-41a7-8d08-a6bee22505a6
+https://s.shopee.ph/4Ve9GTb4bO
 ```
 
 ---

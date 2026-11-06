@@ -1,0 +1,463 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyNestora — Local Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & tokens ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg:          #faf7f2;
+      --color-fg:          #1a1917;
+      --color-border:      #3f3a34;
+      --color-muted:       #dfdfdf;
+      --color-btn-bg:      #0d6b63;
+      --color-btn-text:    #faf7f2;
+      --color-btn-hover:   #0a524c;
+      --font:              'Inter', system-ui, sans-serif;
+      --page-max:          1200px;
+      --page-pad:          clamp(1rem, 5vw, 3rem);
+      --radius-btn:        14px;
+      --radius-card:       4px;
+      --transition:        0.2s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      font-size: 14px;
+      color: var(--color-fg);
+      background: var(--color-bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── Layout helpers ───────────────────────────────────── */
+    .page-width {
+      max-width: var(--page-max);
+      margin-inline: auto;
+      padding-inline: var(--page-pad);
+    }
+
+    /* ── Header / Nav ─────────────────────────────────────── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-muted);
+      padding-block: 0.75rem;
+    }
+
+    .site-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .site-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .site-logo img {
+      height: 36px;
+      width: auto;
+      border-radius: 4px;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .site-nav a:hover { opacity: 0.6; }
+
+    .site-nav__icons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 4px;
+      color: var(--color-fg);
+      transition: opacity var(--transition);
+    }
+    .icon-btn:hover { opacity: 0.6; }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: clamp(400px, 60vh, 700px);
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding-block: 72px 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .hero__eyebrow {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1a1917;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .hero__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.4rem;
+      background: rgba(250, 247, 242, 0.92);
+      border: 1.5px solid #0d6b63;
+      color: #0d6b63;
+      border-radius: var(--radius-btn);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+    .hero__cta:hover {
+      background: #0d6b63;
+      color: #faf7f2;
+    }
+
+    /* ── Product grid ─────────────────────────────────────── */
+    .product-section {
+      padding-block: 48px;
+    }
+
+    .product-section__header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 28px;
+    }
+
+    .product-section__title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .product-section__link {
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: opacity var(--transition);
+    }
+    .product-section__link:hover { opacity: 0.6; }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px 8px;
+      row-gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* ── Product card ─────────────────────────────────────── */
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform var(--transition);
+    }
+    .product-card:hover { transform: translateY(-2px); }
+    .product-card:hover .product-card__image { opacity: 0.92; }
+
+    .product-card__media {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      border-radius: var(--radius-card);
+      background: #f0ede8;
+    }
+
+    .product-card__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity var(--transition);
+    }
+
+    .product-card__info {
+      padding: 4px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .product-card__title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--color-fg);
+    }
+
+    .product-card__price {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--color-fg);
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    .site-footer {
+      border-top: 1px solid var(--color-muted);
+      padding-block: 2rem;
+      margin-top: 2rem;
+    }
+
+    .site-footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    /* ── Dev notice ───────────────────────────────────────── */
+    .dev-notice {
+      background: #0d6b63;
+      color: #faf7f2;
+      text-align: center;
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    .dev-notice a { color: #a8f0e8; text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- Dev notice -->
+  <div class="dev-notice">
+    🛠 Local Preview Mode — Product cards → <a href="product.html">Product Page</a> → <a href="https://shop.app/checkout/81753374950/cn/hWNIpKekBssPGtDWZ5ultSZY/en-us/shoppay_login?_mcs=3.AMPS&_r=AQAB1WSgM9j2ZiyklrdxyqKO5ZmtbsS3E8dnDT2mMOktz3gWNxSc&redirect_source=direct_checkout_product&tracking_unique=0253b564-04a6-4506-94a1-ac8e2598de0b&tracking_visit=c5e2a50e-7009-41a7-8d08-a6bee22505a6" target="_blank">Shop Pay Checkout</a>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="page-width site-header__inner">
+      <a href="#" class="site-logo">
+        <img
+          src="https://cdn.shopify.com/s/files/1/0817/5337/4950/files/favicon-180.png"
+          alt="MyNestora"
+          onerror="this.style.display='none'"
+        />
+        MyNestora
+      </a>
+
+      <nav class="site-nav">
+        <a href="#">Home</a>
+        <a href="#">Shop</a>
+        <a href="#">About</a>
+      </nav>
+
+      <div class="site-nav__icons">
+        <!-- Search -->
+        <button class="icon-btn" aria-label="Search">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </button>
+        <!-- Cart -->
+        <button class="icon-btn" aria-label="Cart">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img
+      class="hero__bg"
+      src="https://cdn.shopify.com/s/files/1/0817/5337/4950/files/hero-forest-paper-fade_cacad3a8-775c-48da-9acb-382d41e4c23c.jpg"
+      alt="MyNestora hero background"
+      loading="eager"
+      onerror="this.src='images/hero-forest-paper-fade.webp'"
+    />
+    <div class="page-width hero__content">
+      <h2 class="hero__eyebrow">MyNestora</h2>
+      <a
+        class="hero__cta"
+        href="https://shop.app/checkout/81753374950/cn/hWNIpKekBssPGtDWZ5ultSZY/en-us/shoppay_login?_mcs=3.AMPS&_r=AQAB1WSgM9j2ZiyklrdxyqKO5ZmtbsS3E8dnDT2mMOktz3gWNxSc&redirect_source=direct_checkout_product&tracking_unique=0253b564-04a6-4506-94a1-ac8e2598de0b&tracking_visit=c5e2a50e-7009-41a7-8d08-a6bee22505a6"
+        target="_blank"
+      >
+        Shop all
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Product List -->
+  <section class="product-section">
+    <div class="page-width">
+      <div class="product-section__header">
+        <h3 class="product-section__title">All Products</h3>
+        <a
+          class="product-section__link"
+          href="https://shop.app/checkout/81753374950/cn/hWNIpKekBssPGtDWZ5ultSZY/en-us/shoppay_login?_mcs=3.AMPS&_r=AQAB1WSgM9j2ZiyklrdxyqKO5ZmtbsS3E8dnDT2mMOktz3gWNxSc&redirect_source=direct_checkout_product&tracking_unique=0253b564-04a6-4506-94a1-ac8e2598de0b&tracking_visit=c5e2a50e-7009-41a7-8d08-a6bee22505a6"
+          target="_blank"
+        >View all</a>
+      </div>
+
+      <div class="product-grid" id="product-grid">
+        <!-- Cards injected by JS below -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="page-width site-footer__inner">
+      <span>© 2025 MyNestora. All rights reserved.</span>
+      <span>Powered by Shopify</span>
+    </div>
+  </footer>
+
+  <script>
+    const CHECKOUT_URL = "product.html";
+    const DIRECT_CHECKOUT = "https://shop.app/checkout/81753374950/cn/hWNIpKekBssPGtDWZ5ultSZY/en-us/shoppay_login?_mcs=3.AMPS&_r=AQAB1WSgM9j2ZiyklrdxyqKO5ZmtbsS3E8dnDT2mMOktz3gWNxSc&redirect_source=direct_checkout_product&tracking_unique=0253b564-04a6-4506-94a1-ac8e2598de0b&tracking_visit=c5e2a50e-7009-41a7-8d08-a6bee22505a6";
+
+    // Real product images from the Shopify CDN
+    const CDN = "https://cdn.shopify.com/s/files/1/0817/5337/4950/files/";
+
+    const products = [
+      {
+        title: "4-in-1 Car Vacuum Cleaner",
+        price: "$29.99",
+        image: CDN + "01-hero_e54a453c-7c8e-4118-8bfe-00f842eadf67_800x800.jpg",
+        fallback: "images/product-car-vac-01-hero.webp",
+      },
+      {
+        title: "4-in-1 Car Vacuum — Angle View",
+        price: "$29.99",
+        image: CDN + "02_8cdc5f5f-f80d-4aff-8e23-e7b2e731c2b7_800x800.jpg",
+        fallback: "images/product-car-vac-02.webp",
+      },
+      {
+        title: "4-in-1 Car Vacuum — Features",
+        price: "$29.99",
+        image: CDN + "03_390da618-d94f-499b-8897-8415227a0317_800x800.jpg",
+        fallback: "images/product-car-vac-03.webp",
+      },
+      {
+        title: "4-in-1 Car Vacuum — Details",
+        price: "$29.99",
+        image: CDN + "04_d822c13e-e36d-4f51-975f-c43396d12f3b_800x800.jpg",
+        fallback: "images/product-car-vac-04.webp",
+      },
+      {
+        title: "4-in-1 Car Vacuum — Attachments",
+        price: "$29.99",
+        image: CDN + "05_13cf5979-f980-4fa5-b1e8-edd8989583f3_800x800.jpg",
+        fallback: "images/product-car-vac-05.webp",
+      },
+      {
+        title: "4-in-1 Car Vacuum — Dimensions",
+        price: "$29.99",
+        image: CDN + "06_06ad299e-6098-4d95-84ab-819c9c35e59b_800x800.jpg",
+        fallback: "images/product-car-vac-06.webp",
+      },
+      {
+        title: "4-in-1 Car Vacuum — Video",
+        price: "$29.99",
+        image: CDN + "5300e6ab6d624d1a883f9185a8d83ce1.thumbnail.0000000000_800x800.jpg",
+        fallback: "images/product-car-vac-video-thumbnail.webp",
+      },
+      {
+        title: "4-in-1 Car Vacuum — Hero Alt",
+        price: "$29.99",
+        image: CDN + "01-hero_e54a453c-7c8e-4118-8bfe-00f842eadf67_800x800.jpg",
+        fallback: "images/product-car-vac-01-hero.webp",
+      },
+    ];
+
+    function buildCard(p) {
+      return `
+        <a class="product-card" href="${CHECKOUT_URL}" aria-label="View ${p.title}">
+          <div class="product-card__media">
+            <img
+              class="product-card__image"
+              src="${p.image}"
+              alt="${p.title}"
+              loading="lazy"
+              onerror="this.src='${p.fallback}'"
+            />
+          </div>
+          <div class="product-card__info">
+            <span class="product-card__title">${p.title}</span>
+            <span class="product-card__price">${p.price}</span>
+          </div>
+        </a>`;
+    }
+
+    document.getElementById("product-grid").innerHTML =
+      products.map(buildCard).join("");
+  </script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+{% raw %}
 # Theme authoring guide
 
 Use this guide when editing this theme. It describes the technical contracts for
@@ -394,3 +395,4 @@ accurately report unavailable checks.
   rendering.
 - Report unavailable generation, checking, preview, authentication, or representative
   shop data, with the exact command or inspection a maintainer should perform next.
+{% endraw %}
